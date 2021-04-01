@@ -46,24 +46,49 @@
 #############################################################################
 */
 
-#ifndef __BioFVM_h__
-#define __BioFVM_h__
-
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <vector>
 #include <iostream>
-#include <fstream>
+
+#include <ctime>
+#include <string>
+#include <cstring>
+#include <cstdio>
+
+#ifndef __BioFVM_matlab_h__
+#define __BioFVM_matlab_h__
 
 namespace BioFVM{
-extern std::string BioFVM_Version; 
-extern std::string BioFVM_URL; 
+
+// #include "Matrix.h"
+
+// Paul Macklin wrote these based on documentation on the web. 
+// So far, matlab v4 is (partially) supported. Exceptions:
+//   no complex matrices
+//   no sparse matrices 
+//   no text matrices
+
+// To save in matlab and make it compatible, make sure you use: 
+//   save -v4 <filename> <variable_name>
+
+struct named_vector_data{
+std::vector<std::string> names; 
+std::vector< std::vector<double> > data; 
 };
 
-#include "BioFVM_utilities.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_mesh.h"
-#include "BioFVM_microenvironment.h"
-#include "BioFVM_solvers.h"
-#include "BioFVM_basic_agent.h" 
+std::vector< std::vector<double> > read_matlab( std::string filename );
+named_vector_data read_matlab_with_names( std::string filename );
 
+bool write_matlab( std::vector< std::vector<double> >& input , std::string filename );
+bool write_matlab( std::vector< std::vector<double> >& input , std::string filename , std::vector<std::string>& names );
 
-#endif
+FILE* write_matlab_header( unsigned int rows, unsigned int cols, std::string filename, std::string variable_name );  
+
+// output: FILE pointer, and overwrites rows, cols so you know the size 
+FILE* read_matlab_header( unsigned int* rows, unsigned int* cols , std::string filename ); 
+
+};
+
+#endif 

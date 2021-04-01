@@ -46,24 +46,41 @@
 #############################################################################
 */
 
-#ifndef __BioFVM_h__
-#define __BioFVM_h__
+#ifndef __BioFVM_utilities_h__
+#define __BioFVM_utilities_h__
 
 #include <iostream>
-#include <fstream>
+#include <ctime>
+#include <cmath>
+#include <string>
+#include <chrono>
+#include <random>
 
 namespace BioFVM{
-extern std::string BioFVM_Version; 
-extern std::string BioFVM_URL; 
+
+void TIC(void);
+void TOC(void);
+void RUNTIME_TIC(void);
+void RUNTIME_TOC(void);
+
+double stopwatch_value(void);
+double runtime_stopwatch_value(void);
+
+// This returns the total number of seconds in successive TIC() / TOC() calls 
+// Useful if you use TOC to "pause" your timer (e.g., to exclude file i/o from benchmark times)
+double total_stopwatch_time( void );
+
+void display_stopwatch_value( std::ostream& os , double dIn );
+std::string format_stopwatch_value( double dIn);
+
+void seed_random( unsigned int ); 
+void seed_random( void ); 
+double uniform_random( void );
+
+double compute_mean( std::vector<double>& values );
+double compute_variance( std::vector<double>& values, double mean ); 
+double compute_variance( std::vector<double>& values ); 
+	
 };
-
-#include "BioFVM_utilities.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_mesh.h"
-#include "BioFVM_microenvironment.h"
-#include "BioFVM_solvers.h"
-#include "BioFVM_basic_agent.h" 
-
-
-#endif
+ 
+#endif 

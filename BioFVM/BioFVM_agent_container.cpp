@@ -46,24 +46,24 @@
 #############################################################################
 */
 
-#ifndef __BioFVM_h__
-#define __BioFVM_h__
+#include "BioFVM_agent_container.h"
+#include "BioFVM_basic_agent.h"
+#include "BioFVM_vector.h"
 
-#include <iostream>
-#include <fstream>
 
 namespace BioFVM{
-extern std::string BioFVM_Version; 
-extern std::string BioFVM_URL; 
+
+
+Agent_Container::Agent_Container(){}
+
+void Agent_Container::initialize(int num_voxels){}
+
+void Agent_Container::register_agent( Basic_Agent* agent ){}
+
+void Agent_Container::remove_agent(Basic_Agent* agent ){}
+void Agent_Container::add_agent_to_outer_voxel(Basic_Agent* agent){}
+void Agent_Container::remove_agent_from_voxel(Basic_Agent* agent, int voxel_index){}
+void Agent_Container::add_agent_to_voxel(Basic_Agent* agent, int voxel_index){}
+void Agent_Container::update_all_cells(double dt){}
+
 };
-
-#include "BioFVM_utilities.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_mesh.h"
-#include "BioFVM_microenvironment.h"
-#include "BioFVM_solvers.h"
-#include "BioFVM_basic_agent.h" 
-
-
-#endif

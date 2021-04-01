@@ -46,24 +46,29 @@
 #############################################################################
 */
 
-#ifndef __BioFVM_h__
-#define __BioFVM_h__
+#ifndef __BioFVM_solvers_h__
+#define __BioFVM_solvers_h__
 
-#include <iostream>
-#include <fstream>
+#include "BioFVM_microenvironment.h" 
 
 namespace BioFVM{
-extern std::string BioFVM_Version; 
-extern std::string BioFVM_URL; 
+// /*! diffusion-decay solvers for the equation du/dt = D*Laplacian(u) - lambda*u - U(x)*u + M(X)*(uT-u) */ 
+
+// /*! diffusion-decay solver: 3D LOD implicit (stable method). D and r uniform */  
+void diffusion_decay_solver__constant_coefficients_LOD_3D( Microenvironment& M, double dt ); // done
+// /*! diffusion-decay solver: 2D LOD implicit (stable method). D and r uniform */  
+void diffusion_decay_solver__constant_coefficients_LOD_2D( Microenvironment& M, double dt ); // done
+void diffusion_decay_solver__constant_coefficients_LOD_1D( Microenvironment& M, double dt ); // done
+
+/*! This solves for constant diffusion coefficients on a general mesh using the 
+    explicit stepping for the diffusion operator, and implicit stepping for all 
+    other terms to increase stability. It is suitable for a general mesh. */ 
+
+// /*! diffusion-decay solver: 3D explicit method -- suitable to a general mesh if necessary */  
+void diffusion_decay_explicit_uniform_rates( Microenvironment& M , double dt );  // it exists 
+
+void diffusion_decay_solver__constant_coefficients_explicit( Microenvironment& M, double dt ); 
+void diffusion_decay_solver__constant_coefficients_explicit_uniform_mesh( Microenvironment& M, double dt ); 
 };
 
-#include "BioFVM_utilities.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_mesh.h"
-#include "BioFVM_microenvironment.h"
-#include "BioFVM_solvers.h"
-#include "BioFVM_basic_agent.h" 
-
-
-#endif
+#endif 

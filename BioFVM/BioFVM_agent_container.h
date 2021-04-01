@@ -46,24 +46,33 @@
 #############################################################################
 */
 
-#ifndef __BioFVM_h__
-#define __BioFVM_h__
+#ifndef __BioFVM_agent_container_h__
+#define __BioFVM_agent_container_h__
 
-#include <iostream>
-#include <fstream>
+#include <vector>
 
 namespace BioFVM{
-extern std::string BioFVM_Version; 
-extern std::string BioFVM_URL; 
+
+class Basic_Agent; 
+class Microenvironment;
+
+class Agent_Container
+{
+ private:	
+
+ public:
+	std::vector<std::vector<Basic_Agent*> > agent_grid;
+	Agent_Container();	
+	void register_agent( Basic_Agent* agent );
+	void initialize( int num_voxels );
+	void remove_agent(Basic_Agent* agent );
+	void add_agent_to_outer_voxel(Basic_Agent* agent);
+	void remove_agent_from_voxel(Basic_Agent* agent, int voxel_index);
+	void add_agent_to_voxel(Basic_Agent* agent, int voxel_index);
+	void update_all_cells(double dt);
 };
 
-#include "BioFVM_utilities.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_vector.h" 
-#include "BioFVM_mesh.h"
-#include "BioFVM_microenvironment.h"
-#include "BioFVM_solvers.h"
-#include "BioFVM_basic_agent.h" 
+int find_escaping_face_index(Basic_Agent* agent);
 
-
+};
 #endif
