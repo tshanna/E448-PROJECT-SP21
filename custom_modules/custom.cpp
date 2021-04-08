@@ -206,6 +206,7 @@ void antibiotic_phenotype( Cell* pCell, Phenotype& p , double dt )
 	// Hill parameters
 	double hill = pCell->custom_data["Hill_coefficient"];
 	double c_half_max = pCell->custom_data["PD_half_max"];
+	//double rmad = pCell-> 
 	
 	// apoptosis baseline and max
 	Cell_Definition* pCD = find_cell_definition( pCell->type );
@@ -234,6 +235,29 @@ void antibiotic_phenotype( Cell* pCell, Phenotype& p , double dt )
 	// evaluate the probability. If it's a hit, change type
 	if( UniformRandom() <= prob_mutation ){
 		pCell->convert_to_cell_definition(*pResistant); }
+	
+	//try to make cells interact
+	//if( UniformRandom() <= 1.2 ){
+		//pCell->convert_to_cell_definition(*pResistant); }
+		
+return; 
+}
+
+void mutantFactor_phenotype( Cell* pCell, Phenotype& p , double dt )
+{
+	// sample environment
+	static int nMut = microenvironment.find_density_index( "mutantFactor" );
+	double d = pCell->nearest_density_vector()[nMut];
+	
+	static int nAnti = microenvironment.find_density_index( "antibiotic" );
+	double c = pCell->nearest_density_vector()[nAnti];
+	
+	static Cell_Definition* pResistant = find_cell_definition( "resistant");
+	
+	if( d >= c) {
+		pCell->convert_to_cell_definition(*pResistant); }
+
+
 return;
 }	
 

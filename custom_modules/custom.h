@@ -93,3 +93,5 @@ void contact_function( Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& 
 
 void antibiotic_phenotype( Cell* pCell, Phenotype& phenotype, double dt);
 
+void mutantFactor_phenotype( Cell* pCell, Phenotype& phenotype, double dt);
+
