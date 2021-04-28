@@ -322,7 +322,9 @@
                 <proliferation_rate_R type="" units="1/min" description="rate of proliferation for resistant cells"></proliferation_rate_R>
                 <proliferation_rate_S type="" units="1/min" description="rate of proliferation for sensitive cells"></proliferation_rate_S>
 		<div_initialization type="divider" description="---Proliferation Rates---"/>
-
+		<mresistant_cell_color type="string" units="none" description="color of cell type">rgb(255,0,0)</resistant_cell_color>
+		<sensitive_cell_color type="string" units="none" description="color of cell type">rgb(211,211,211)</sensitive_cell_color>
+		
 	</user_parameters>
 	
 </PhysiCell_settings>
