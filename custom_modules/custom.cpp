@@ -111,6 +111,7 @@ void create_cell_types( void )
 	
 	Cell_Definition* pSensitive = find_cell_definition( "sensitive" );
 	Cell_Definition* pResistant = find_cell_definition( "resistant" );
+	Cell_Definition* newResistant = find_cell_definition( "new_resistant" );
 	cell_defaults.functions.update_phenotype = antibiotic_phenotype; 
 	cell_defaults.functions.update_phenotype = antibiotic_phenotype;
 	
@@ -186,7 +187,8 @@ void setup_tissue( void )
 }
 
 std::vector<std::string> my_coloring_function( Cell* pCell )
-{ return paint_by_number_cell_coloring(pCell); }
+{
+return paint_by_number_cell_coloring(pCell); }
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
 { return; }
@@ -221,44 +223,18 @@ void antibiotic_phenotype( Cell* pCell, Phenotype& p , double dt )
 	// update apoptosis
 	p.death.rates[0] = base_apop + E*(max_apop-base_apop);
 	
-	// get pointer to resistant type
-	static Cell_Definition* pResistant = find_cell_definition( "resistant");
+	// get pointer to new resistant type
+	static Cell_Definition* newResistant = find_cell_definition( "new_resistant");
+
+	//mutation if mutation factor has higher concentration than antibiotic
+	static int nMutation = microenvironment.find_density_index( "mutantFactor" );
+	double d = pCell->nearest_density_vector()[nMutation];
 	
-	// compute mutation rate based on effect
-	double mutation_rate = pCell->custom_data["max_mutation_rate"] * E;
-	
-	// calculate probability of mutation
-	double prob_mutation = dt * mutation_rate;
-	if( prob_mutation > 1 ){
-		prob_mutation = 1.0; }
-	
-	// evaluate the probability. If it's a hit, change type
-	if( UniformRandom() <= prob_mutation ){
-		pCell->convert_to_cell_definition(*pResistant); }
-	
-	//try to make cells interact
-	//if( UniformRandom() <= 1.2 ){
-		//pCell->convert_to_cell_definition(*pResistant); }
+	if(d >= c) {
+		pCell->convert_to_cell_definition(*newResistant); }
+
 		
 return; 
 }
-
-void mutantFactor_phenotype( Cell* pCell, Phenotype& p , double dt )
-{
-	// sample environment
-	static int nMut = microenvironment.find_density_index( "mutantFactor" );
-	double d = pCell->nearest_density_vector()[nMut];
-	
-	static int nAnti = microenvironment.find_density_index( "antibiotic" );
-	double c = pCell->nearest_density_vector()[nAnti];
-	
-	static Cell_Definition* pResistant = find_cell_definition( "resistant");
-	
-	if( d >= c) {
-		pCell->convert_to_cell_definition(*pResistant); }
-
-
-return;
-}	
 
 
