@@ -125,7 +125,7 @@
 				<diffusion_coefficient units="micron^2/min">5000.0</diffusion_coefficient>
 				<decay_rate units="1/min">0.001</decay_rate>
 			</physical_parameter_set>
-			<initial_condition units="dimensionless">0.3</initial_condition> <!-- 0.3 for base -->
+			<initial_condition units="dimensionless">0.2</initial_condition> <!-- 0.3 for base -->
 			<Dirichlet_boundary_condition units="dimensionless" enabled="false">0</Dirichlet_boundary_condition>
  		</variable>
 
